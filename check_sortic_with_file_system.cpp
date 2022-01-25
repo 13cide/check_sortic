@@ -3,38 +3,60 @@
 void initialize_a(vector<int> &a) { // заполнение массива
     ifstream input_nums;
     input_nums.open(R"(C:\Users\aleks\CLionProjects\check\input_nums.txt)"); //файл с числами
-    string j;
-    input_nums >> j;
-    while( j != "!" ) {
-        a.push_back(string_to_int(j));
-        input_nums >> j;
+    string nums;
+    string n = "";
+    getline(input_nums, nums);
+    for (int i = 0; nums[i] != '\0'; i++) {
+        if (nums[i] != ' ') {
+            n += nums[i];
+        }
+        else {
+            a.push_back(string_to_int(n));
+            n = "";
+        }
     }
+    a.push_back(string_to_int(n));
 }
 
-void start(vector<int> &a, vector<int> &b) { // считывание команд
+vector<string> commands_to_mass() { // чтобы влезать в строки я сделал функцию для переделки файла с коммандами в вектор
+    vector<string> commands;
     ifstream input_commands;
-    input_commands.open(R"(C:\Users\aleks\CLionProjects\check\input_commands.txt)"); //файл с командами
-    string j;
-    input_commands >> j;
-    while( j != "*" ) {
-        if (j == "sa") s(a);
-        if (j == "sb") s(b);
-        if (j == "ss") {
+    input_commands.open(R"(C:\Users\aleks\CLionProjects\check\input_commands.txt)"); //файл с командами (запись через пробел)
+    string command = "";
+    string c = "";
+    getline(input_commands, command);
+    for (int i = 0; command[i] != '\0'; i++) {
+        if (command[i] != ' ') {
+            c += command[i];
+        }
+        else {
+            commands.push_back(c);
+            c = "";
+        }
+    }
+    commands.push_back(c);
+    return commands;
+}
+
+void start(vector<int> &a, vector<int> &b, vector<string> commands) { // считывание команд (команды через пробел)
+    for (int j = 0; j < commands.size(); j++) {
+        if (commands[j] == "sa") s(a);
+        if (commands[j] == "sb") s(b);
+        if (commands[j] == "ss") {
             s(a);
             s(b);}
-        if (j == "ra") r(a);
-        if (j == "rb") r(b);
-        if (j == "rr") {
+        if (commands[j] == "ra") r(a);
+        if (commands[j] == "rb") r(b);
+        if (commands[j] == "rr") {
             r(a);
             r(b);}
-        if (j == "rra") rr(a);
-        if (j == "rrb") rr(b);
-        if (j == "rrr") {
+        if (commands[j] == "rra") rr(a);
+        if (commands[j] == "rrb") rr(b);
+        if (commands[j] == "rrr") {
             rr(a);
             rr(b);}
-        if (j == "pa") p(a, b);
-        if (j == "pb") p(b, a);
-        input_commands >> j;
+        if (commands[j] == "pa") p(a, b);
+        if (commands[j] == "pb") p(b, a);
     }
 }
 
@@ -45,14 +67,13 @@ bool is_sorted(vector<int> &v) { // проверка на отсортирова
     return true;
 }
 
-
 int main() {
     ofstream output;
     output.open(R"(C:\Users\aleks\CLionProjects\check\output.txt)"); // файл для записи результата
     vector<int> a;
     vector<int> b;
     initialize_a(a);
-    start(a, b);
+    start(a, b, commands_to_mass());
     if (is_sorted(a) && b.empty()) output << "OK";
     else output << "KO";
     return 0;
