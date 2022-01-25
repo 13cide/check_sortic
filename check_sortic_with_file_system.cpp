@@ -69,12 +69,16 @@ bool is_sorted(vector<int> &v) { // проверка на отсортирова
 
 int main() {
     ofstream output;
-    output.open(R"()"); // файл для записи результата
+    output.open(R"(C:\Users\aleks\CLionProjects\check\output.txt)"); // файл для записи результата
     vector<int> a;
     vector<int> b;
     initialize_a(a);
     start(a, b, commands_to_mass());
     if (is_sorted(a) && b.empty()) output << "OK";
-    else output << "KO";
+    else if (is_sorted(a)) output << "KO\rb isn`t empty";
+    else {
+        output << "KO\r\ra\r-\r";
+        for (int i = 0; i < a.size(); i++) output << a[i] << endl; // вывод a, если он не отсортированный
+    }
     return 0;
 }
