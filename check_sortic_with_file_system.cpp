@@ -2,7 +2,7 @@
 
 void initialize_a(vector<int> &a) { // заполнение массива
     ifstream input_nums;
-    input_nums.open(R"(C:\Users\aleks\CLionProjects\check\input_nums.txt)"); //файл с числами
+    input_nums.open(R"()"); //файл с числами
     string nums;
     string n = "";
     getline(input_nums, nums);
@@ -21,7 +21,7 @@ void initialize_a(vector<int> &a) { // заполнение массива
 vector<string> commands_to_mass() { // чтобы влезать в строки я сделал функцию для переделки файла с коммандами в вектор
     vector<string> commands;
     ifstream input_commands;
-    input_commands.open(R"(C:\Users\aleks\CLionProjects\check\input_commands.txt)"); //файл с командами (запись через пробел)
+    input_commands.open(R"()"); //файл с командами (запись через пробел)
     string command = "";
     string c = "";
     getline(input_commands, command);
@@ -69,7 +69,7 @@ bool is_sorted(vector<int> &v) { // проверка на отсортирова
 
 int main() {
     ofstream output;
-    output.open(R"(C:\Users\aleks\CLionProjects\check\output.txt)"); // файл для записи результата
+    output.open(R"()"); // файл для записи результата
     vector<int> a;
     vector<int> b;
     initialize_a(a);
