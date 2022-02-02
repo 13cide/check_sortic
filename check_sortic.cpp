@@ -1,11 +1,7 @@
 #include "check_sort.h"
 
-void initialize_a(vector<int> &a) { // –∑–∞–ø–æ–ª–Ω–µ–Ω–∏–µ –º–∞—Å—Å–∏–≤–∞
-    ifstream input_nums;
-    input_nums.open(R"()"); //—Ñ–∞–π–ª —Å —á–∏—Å–ª–∞–º–∏
-    string nums;
+void initialize_a(vector<int> &a, string nums) { // ß†ØÆ´≠•≠®• ¨†··®¢†
     string n = "";
-    getline(input_nums, nums);
     for (int i = 0; nums[i] != '\0'; i++) {
         if (nums[i] != ' ') {
             n += nums[i];
@@ -18,13 +14,16 @@ void initialize_a(vector<int> &a) { // –∑–∞–ø–æ–ª–Ω–µ–Ω–∏–µ –º–∞—Å—Å–∏–≤–∞
     a.push_back(string_to_int(n));
 }
 
-vector<string> commands_to_mass() { // —á—Ç–æ–±—ã –≤–ª–µ–∑–∞—Ç—å –≤ —Å—Ç—Ä–æ–∫–∏ —è —Å–¥–µ–ª–∞–ª —Ñ—É–Ω–∫—Ü–∏—é –¥–ª—è –ø–µ—Ä–µ–¥–µ–ª–∫–∏ —Ñ–∞–π–ª–∞ —Å –∫–æ–º–º–∞–Ω–¥–∞–º–∏ –≤ –≤–µ–∫—Ç–æ—Ä
+vector<string> commands_to_mass(int argc, char *argv[]) { // Á‚Æ°Î ¢´•ß†‚Ï ¢ ·‚‡Æ™® Ô ·§•´†´ ‰„≠™Ê®Ó §´Ô Ø•‡•§•´™® ‰†©´† · ™Æ¨¨†≠§†¨® ¢ ¢•™‚Æ‡
     vector<string> commands;
-    ifstream input_commands;
-    input_commands.open(R"()"); //—Ñ–∞–π–ª —Å –∫–æ–º–∞–Ω–¥–∞–º–∏ (–∑–∞–ø–∏—Å—å —á–µ—Ä–µ–∑ –ø—Ä–æ–±–µ–ª)
     string command = "";
+    if (argc < 3) {
+        ifstream input_commands;
+        input_commands.open(R"(C:\Users\aleks\CLionProjects\check\input_commands.txt)"); //‰†©´ · ™Æ¨†≠§†¨® (ß†Ø®·Ï Á•‡•ß Ø‡Æ°•´
+        getline(input_commands, command);
+    }
+    else command = argv[2];
     string c = "";
-    getline(input_commands, command);
     for (int i = 0; command[i] != '\0'; i++) {
         if (command[i] != ' ') {
             c += command[i];
@@ -38,7 +37,7 @@ vector<string> commands_to_mass() { // —á—Ç–æ–±—ã –≤–ª–µ–∑–∞—Ç—å –≤ —Å—Ç—Ä–æ–∫–∏
     return commands;
 }
 
-void start(vector<int> &a, vector<int> &b, vector<string> commands) { // —Å—á–∏—Ç—ã–≤–∞–Ω–∏–µ –∫–æ–º–∞–Ω–¥ (–∫–æ–º–∞–Ω–¥—ã —á–µ—Ä–µ–∑ –ø—Ä–æ–±–µ–ª)
+void start(vector<int> &a, vector<int> &b, vector<string> commands) { // ·Á®‚Î¢†≠®• ™Æ¨†≠§ (™Æ¨†≠§Î Á•‡•ß Ø‡Æ°•´)
     for (int j = 0; j < commands.size(); j++) {
         if (commands[j] == "sa") s(a);
         if (commands[j] == "sb") s(b);
@@ -62,23 +61,23 @@ void start(vector<int> &a, vector<int> &b, vector<string> commands) { // —Å—á–∏—
 
 void out(vector<int> &a, vector<int> &b) {
     ofstream output;
-    output.open(R"()"); // —Ñ–∞–π–ª –¥–ª—è –∑–∞–ø–∏—Å–∏ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞
+    output.open(R"(C:\Users\aleks\CLionProjects\check\output.txt)"); // ‰†©´ §´Ô ß†Ø®·® ‡•ß„´Ï‚†‚†
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     if (is_sorted(a) && b.empty()) {
         output << "OK";
         SetConsoleTextAttribute(hConsole, 2);
         cout << "OK";
     }
-    else if (is_sorted(a)) {
-        output << "KO\rb isn`t empty";
+    else if (!b.empty()) {
+        output << "KO\rb isn`t empty" << endl;
         SetConsoleTextAttribute(hConsole, 1);
         cout << "KO" << endl;
-        SetConsoleTextAttribute(hConsole, 8);
+        SetConsoleTextAttribute(hConsole, 0);
         cout << "b isn`t empty";
     }
     else {
         output << "KO\r\ra\r-\r";
-        for (int i = 0; i < a.size(); i++) output << a[i] << endl; // –≤—ã–≤–æ–¥ a, –µ—Å–ª–∏ –æ–Ω –Ω–µ –æ—Ç—Å–æ—Ä—Ç–∏—Ä–æ–≤–∞–Ω–Ω—ã–π
+        for (int i = 0; i < a.size(); i++) output << a[i] << endl; // ¢Î¢Æ§ a, •·´® Æ≠ ≠• Æ‚·Æ‡‚®‡Æ¢†≠≠Î©
         SetConsoleTextAttribute(hConsole, 1);
         cout << "KO" << endl << endl;
         SetConsoleTextAttribute(hConsole, 14);
@@ -88,11 +87,16 @@ void out(vector<int> &a, vector<int> &b) {
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     vector<int> a;
     vector<int> b;
-    initialize_a(a);
-    start(a, b, commands_to_mass());
+    ifstream input_nums;
+    input_nums.open(R"(C:\Users\aleks\CLionProjects\check\input_nums.txt)"); //‰†©´ · Á®·´†¨®
+    string nums;
+    getline(input_nums, nums);
+    if (argc == 1) initialize_a(a, nums);
+    else initialize_a(a, argv[1]);
+    start(a, b, commands_to_mass(argc, argv));
     out(a, b);
     return 0;
 }

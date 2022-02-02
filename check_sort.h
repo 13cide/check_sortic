@@ -14,7 +14,7 @@ int itc_len(string str);
 bool is_sorted(vector<int> &v);
 
 void start(vector<int> &a, vector<int> &b, vector<string> commands);
-vector<string> commands_to_mass();
+vector<string> commands_to_mass(int i, char **pString);
 void initialize_a(vector<int> &a);
 
 void p(vector <int> &v_to, vector <int> &v_from);
